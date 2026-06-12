@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jessie Cao — Content Operations Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg:        #0B0E11;
+    --surface:   #1E2329;
+    --surface2:  #2B3139;
+    --border:    #2B3139;
+    --border2:   #363C45;
+    --yellow:    #F0B90B;
+    --yellow-dim: rgba(240,185,11,0.09);
+    --text:      #EAECEF;
+    --mid:       #848E9C;
+    --soft:      #474D57;
+    --green:     #0ECB81;
+  }
+
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', sans-serif;
+    font-size: 15px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: var(--yellow); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 0 48px; height: 60px;
+    background: rgba(11,14,17,0.93);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-logo { display: flex; align-items: center; gap: 10px; }
+  .nav-diamond {
+    width: 20px; height: 20px;
+    background: var(--yellow);
+    clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+  }
+  .nav-name { font-weight: 700; font-size: 14px; color: var(--text); }
+  .nav-links { display: flex; gap: 28px; }
+  .nav-links a { font-size: 13px; color: var(--mid); }
+  .nav-links a:hover { color: var(--text); text-decoration: none; }
+
+  /* HERO */
+  .hero {
+    max-width: 1040px; margin: 0 auto;
+    padding: 120px 48px 88px;
+    min-height: 100vh;
+    display: flex; flex-direction: column; justify-content: center;
+  }
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--yellow-dim);
+    border: 1px solid rgba(240,185,11,0.22);
+    border-radius: 20px; padding: 5px 14px;
+    margin-bottom: 32px; width: fit-content;
+    font-size: 12px; font-weight: 500; color: var(--yellow);
+  }
+  .badge-dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--yellow);
+    animation: blink 2.2s infinite;
+  }
+  @keyframes blink { 0%,100%{opacity:1} 50%{opacity:.3} }
+
+  .hero h1 {
+    font-size: clamp(32px, 4.6vw, 58px);
+    font-weight: 700; line-height: 1.08;
+    letter-spacing: -0.022em; margin-bottom: 22px;
+  }
+  .hero h1 em { font-style: normal; color: var(--yellow); }
+
+  .hero-sub {
+    font-size: 16px; color: var(--mid);
+    max-width: 580px; line-height: 1.75; margin-bottom: 40px;
+  }
+
+  .hero-btns { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 56px; }
+  .btn-primary {
+    background: var(--yellow); color: #0B0E11;
+    font-weight: 700; font-size: 14px;
+    padding: 11px 24px; border-radius: 4px;
+    transition: opacity .15s;
+  }
+  .btn-primary:hover { opacity: .87; text-decoration: none; }
+  .btn-ghost {
+    border: 1px solid var(--border2); color: var(--mid);
+    font-size: 14px; font-weight: 500;
+    padding: 11px 24px; border-radius: 4px;
+    transition: border-color .15s, color .15s;
+  }
+  .btn-ghost:hover { border-color: var(--soft); color: var(--text); text-decoration: none; }
+
+  .stat-strip {
+    display: flex; border: 1px solid var(--border);
+    border-radius: 6px; overflow: hidden; width: fit-content; flex-wrap: wrap;
+  }
+  .stat-cell {
+    padding: 16px 26px; border-right: 1px solid var(--border);
+    display: flex; flex-direction: column; gap: 3px;
+  }
+  .stat-cell:last-child { border-right: none; }
+  .stat-num { font-size: 21px; font-weight: 700; color: var(--yellow); letter-spacing: -0.01em; }
+  .stat-lbl { font-size: 11px; color: var(--mid); text-transform: uppercase; letter-spacing: 0.07em; }
+
+  /* SECTIONS */
+  .section { max-width: 1040px; margin: 0 auto; padding: 88px 48px; }
+  .section + .section { border-top: 1px solid var(--border); }
+  .sec-label {
+    font-size: 11px; font-weight: 600; letter-spacing: 0.13em;
+    text-transform: uppercase; color: var(--yellow); margin-bottom: 10px;
+  }
+  .sec-heading {
+    font-size: 24px; font-weight: 700;
+    letter-spacing: -0.013em; margin-bottom: 10px;
+  }
+  .sec-sub { font-size: 14px; color: var(--mid); margin-bottom: 40px; line-height: 1.65; }
+
+  /* WRITING */
+  .writing-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 22px; }
+  .w-card {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 6px; padding: 22px;
+    display: flex; flex-direction: column; gap: 10px;
+    transition: border-color .18s;
+  }
+  .w-card:hover { border-color: var(--border2); }
+  .w-tag {
+    font-size: 11px; font-weight: 500; letter-spacing: 0.06em;
+    text-transform: uppercase; color: var(--yellow);
+    background: var(--yellow-dim);
+    padding: 2px 8px; border-radius: 3px; width: fit-content;
+  }
+  .w-title { font-size: 14px; font-weight: 600; line-height: 1.4; }
+  .w-desc { font-size: 13px; color: var(--mid); line-height: 1.65; flex: 1; }
+  .w-meta { font-size: 12px; color: var(--soft); }
+  .w-note { font-size: 12px; color: var(--soft); font-style: italic; }
+  .w-link {
+    display: inline-flex; align-items: center; gap: 5px;
+    font-size: 13px; color: var(--yellow); font-weight: 500; margin-top: 4px;
+  }
+  .w-link:hover { text-decoration: underline; }
+  .writing-footer { display: flex; gap: 24px; flex-wrap: wrap; padding-top: 4px; }
+
+  /* CAMPAIGNS */
+  .camp-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .camp-card {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 6px; padding: 22px;
+    display: flex; flex-direction: column; gap: 12px;
+    transition: border-color .18s;
+  }
+  .camp-card:hover { border-color: var(--border2); }
+  .camp-card.full { grid-column: span 2; }
+  .cc-co { font-size: 11px; color: var(--yellow); font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; }
+  .cc-title { font-size: 15px; font-weight: 600; line-height: 1.35; }
+  .cc-desc { font-size: 13px; color: var(--mid); line-height: 1.7; flex: 1; }
+  .metrics {
+    display: flex; gap: 20px; flex-wrap: wrap;
+    padding-top: 14px; border-top: 1px solid var(--border);
+  }
+  .m-val { font-size: 17px; font-weight: 700; display: block; }
+  .m-key { font-size: 11px; color: var(--soft); text-transform: uppercase; letter-spacing: 0.06em; }
+  .tags { display: flex; gap: 6px; flex-wrap: wrap; }
+  .t { font-size: 11px; color: var(--mid); border: 1px solid var(--border); padding: 2px 8px; border-radius: 3px; }
+
+  /* JD MATCH */
+  .match-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; }
+  .match-item {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 6px; padding: 20px;
+    display: flex; flex-direction: column; gap: 8px;
+  }
+  .match-req {
+    font-size: 11px; color: var(--mid); line-height: 1.5;
+    padding-bottom: 8px; border-bottom: 1px solid var(--border);
+    font-style: italic;
+  }
+  .match-title { font-size: 14px; font-weight: 600; }
+  .match-desc { font-size: 13px; color: var(--mid); line-height: 1.62; flex: 1; }
+  .match-ev {
+    font-size: 12px; color: var(--green); font-weight: 500;
+    display: flex; align-items: center; gap: 4px;
+  }
+
+  /* EXPERIENCE */
+  .exp-item {
+    display: grid; grid-template-columns: 148px 1fr;
+    gap: 24px; padding: 26px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .exp-item:first-child { border-top: 1px solid var(--border); }
+  .exp-period { font-size: 12px; color: var(--soft); line-height: 1.6; padding-top: 2px; }
+  .exp-co { font-size: 11px; color: var(--yellow); font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 3px; }
+  .exp-role { font-size: 15px; font-weight: 600; margin-bottom: 8px; }
+  .exp-desc { font-size: 13px; color: var(--mid); line-height: 1.7; }
+
+  /* CONTACT */
+  .contact-box {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 8px; padding: 40px;
+    display: flex; justify-content: space-between; align-items: center;
+    flex-wrap: wrap; gap: 28px;
+  }
+  .contact-box h3 { font-size: 20px; font-weight: 700; margin-bottom: 8px; }
+  .contact-box p { font-size: 14px; color: var(--mid); max-width: 380px; line-height: 1.65; }
+  .c-links { display: flex; flex-direction: column; gap: 14px; align-items: flex-end; }
+  .c-link { display: flex; align-items: center; gap: 9px; font-size: 14px; color: var(--mid); }
+  .c-link:hover { color: var(--text); text-decoration: none; }
+  .c-icon { color: var(--yellow); width: 18px; text-align: center; }
+
+  /* FOOTER */
+  footer {
+    max-width: 1040px; margin: 0 auto; padding: 24px 48px;
+    border-top: 1px solid var(--border);
+    display: flex; justify-content: space-between; align-items: center;
+    flex-wrap: wrap; gap: 8px;
+  }
+  footer p { font-size: 12px; color: var(--soft); }
+
+  /* FADE */
+  .fi { opacity: 0; transform: translateY(12px); transition: opacity .44s ease, transform .44s ease; }
+  .fi.show { opacity: 1; transform: none; }
+
+  @media (max-width: 720px) {
+    nav { padding: 0 20px; }
+    .nav-links { gap: 14px; }
+    .hero, .section { padding-left: 20px; padding-right: 20px; }
+    .hero { padding-top: 88px; min-height: auto; padding-bottom: 60px; }
+    .writing-grid, .camp-grid, .match-grid { grid-template-columns: 1fr; }
+    .camp-card.full { grid-column: span 1; }
+    .exp-item { grid-template-columns: 1fr; gap: 4px; }
+    .stat-strip { width: 100%; }
+    .stat-cell { flex: 1 1 40%; border-bottom: 1px solid var(--border); }
+    .contact-box { flex-direction: column; }
+    .c-links { align-items: flex-start; }
+    footer { flex-direction: column; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">
+    <div class="nav-diamond"></div>
+    <span class="nav-name">Jessie Cao</span>
+  </div>
+  <div class="nav-links">
+    <a href="#writing">Writing</a>
+    <a href="#campaigns">Campaigns</a>
+    <a href="#fit">Role Fit</a>
+    <a href="#experience">Experience</a>
+    <a href="#contact">Contact</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-badge">
+    <div class="badge-dot"></div>
+    Senior Content Operations · Crypto and Financial Platforms
+  </div>
+  <h1>Financial content ops<br>for platforms where<br><em>markets don't wait.</em></h1>
+  <p class="hero-sub">
+    7+ years owning content strategy and operations across live crypto, fintech, and Web3 platforms.
+    At Krystal/Kyber Network, I monitored markets in real time and independently determined content angles
+    for a 60K-follower DeFi platform — translating market movements into timely content that drove
+    user engagement and conversion.
+  </p>
+  <div class="hero-btns">
+    <a href="#writing" class="btn-primary">View writing samples</a>
+    <a href="#fit" class="btn-ghost">See role fit</a>
+  </div>
+  <div class="stat-strip">
+    <div class="stat-cell">
+      <span class="stat-num">60K</span>
+      <span class="stat-lbl">Twitter/X managed</span>
+    </div>
+    <div class="stat-cell">
+      <span class="stat-num">2×</span>
+      <span class="stat-lbl">Engagement growth</span>
+    </div>
+    <div class="stat-cell">
+      <span class="stat-num">30%</span>
+      <span class="stat-lbl">YoY revenue · VNPAY</span>
+    </div>
+    <div class="stat-cell">
+      <span class="stat-num">5 yrs</span>
+      <span class="stat-lbl">Active crypto trader</span>
+    </div>
+    <div class="stat-cell">
+      <span class="stat-num">7+</span>
+      <span class="stat-lbl">Years in marketing</span>
+    </div>
+  </div>
+</div>
+
+<!-- WRITING SAMPLES -->
+<section class="section" id="writing">
+  <p class="sec-label">Writing Samples</p>
+  <h2 class="sec-heading">Financial and market content for crypto audiences.</h2>
+  <p class="sec-sub">Published on Krystal/Kyber Network's official blog and Twitter/X during my tenure as Senior Marketing Specialist (2022–2024). Content strategy, angle, and copy owned by me.</p>
+
+  <div class="writing-grid">
+    <div class="w-card fi">
+      <span class="w-tag">DeFi Education · New Users</span>
+      <p class="w-title">What Are Liquidity Pools? — 5-Minute Explained</p>
+      <p class="w-desc">Accessible entry-point explainer for users new to DeFi — covering smart contracts, AMMs, impermanent loss, and participation as a liquidity provider. Written to reduce onboarding friction and move new users toward their first platform action.</p>
+      <p class="w-meta">Krystal Blog · 2023</p>
+      <p class="w-note">Audience: new DeFi users · Goal: onboarding and activation</p>
+      <a class="w-link" href="https://blog.krystal.app/what-are-liquidity-pools-5-minute-explained/" target="_blank">Read article →</a>
+    </div>
+
+    <div class="w-card fi">
+      <span class="w-tag">Strategy Guide · Experienced Traders</span>
+      <p class="w-title">The Art of Liquidity in DeFi: Strategic Insights on LPs</p>
+      <p class="w-desc">In-depth guide pitched at experienced DeFi investors — AMM optimisation, impermanent loss management, yield farming strategy, and data-informed LP decisions. Demonstrates the ability to write for a financially sophisticated audience without over-simplifying.</p>
+      <p class="w-meta">Krystal Blog · 2024</p>
+      <p class="w-note">Audience: active DeFi investors · Goal: retention and engagement</p>
+      <a class="w-link" href="https://blog.krystal.app/the-art-of-liquidity-in-defi-strategic-insights-on-lps/" target="_blank">Read article →</a>
+    </div>
+
+    <div class="w-card fi">
+      <span class="w-tag">Product Marketing · Platform Pivot</span>
+      <p class="w-title">Introducing Krystal's Transformation to the Best DApp for Liquidity Provisioning</p>
+      <p class="w-desc">Positioning piece written to frame Krystal's strategic product pivot — translating an internal strategy shift into clear user-facing narrative. Required aligning content strategy across product, BD, and community teams before a single word was drafted.</p>
+      <p class="w-meta">Krystal Blog · 2023</p>
+      <p class="w-note">Audience: existing users · Goal: re-engagement and retention</p>
+      <a class="w-link" href="https://blog.krystal.app/introducing-krystals-transformation-to-the-best-dapp-for-liquidity-provisioning/" target="_blank">Read article →</a>
+    </div>
+
+    <div class="w-card fi">
+      <span class="w-tag">Campaign Copy · Conversion</span>
+      <p class="w-title">Krystal Point System — 2024 Airdrop Campaign</p>
+      <p class="w-desc">Conversion-focused campaign copy for Krystal's 2024 airdrop programme — driving participation, explaining eligibility mechanics clearly, and sustaining engagement across the full campaign window. Coordinated alongside on-chain campaign logic and partner co-promotions.</p>
+      <p class="w-meta">Krystal Blog · 2024</p>
+      <p class="w-note">Audience: active and lapsed users · Goal: activation and conversion</p>
+      <a class="w-link" href="https://blog.krystal.app/krystal-point-system-2024-airdrop/" target="_blank">Read article →</a>
+    </div>
+  </div>
+
+  <div class="writing-footer">
+    <a class="w-link" href="https://blog.krystal.app/category/education/" target="_blank">All education posts →</a>
+    <a class="w-link" href="https://blog.krystal.app/category/news/" target="_blank">Market news and commentary →</a>
+    <a class="w-link" href="https://x.com/KrystalDeFi" target="_blank">Short-form on @KrystalDeFi →</a>
+  </div>
+</section>
+
+<!-- CAMPAIGNS -->
+<section class="section" id="campaigns">
+  <p class="sec-label">Campaign Operations</p>
+  <h2 class="sec-heading">End-to-end ownership from brief to performance loop.</h2>
+  <p class="sec-sub">Strategy, execution, and iteration — across crypto, fintech, and multi-market content operations.</p>
+
+  <div class="camp-grid">
+
+    <div class="camp-card full fi">
+      <p class="cc-co">Krystal / Kyber Network — Multi-chain DeFi Platform · 2022–2024</p>
+      <p class="cc-title">Real-time market content and partnership campaign operations</p>
+      <p class="cc-desc">Owned financial and market content strategy for a live multi-chain DeFi platform — token swap, earn, bridge, portfolio management, and IDO launchpad across 10+ blockchain networks. Monitored crypto markets and on-chain data daily, independently determined content angles for market movements, token listings, and protocol updates, and published timely commentary for an investor and trader audience. Managed 5+ co-branded partnership campaigns simultaneously from brief through sign-off. Built a daily content performance feedback loop using Twitter Analytics, GA4, and Buffer — tracking engagement metrics, synthesizing weekly reports, and iterating strategy based on data.</p>
+      <div class="metrics">
+        <div><span class="m-val">15%</span><span class="m-key">Reach growth</span></div>
+        <div><span class="m-val">2×</span><span class="m-key">Engagement increase</span></div>
+        <div><span class="m-val">20%</span><span class="m-key">Uplift per partnership campaign</span></div>
+        <div><span class="m-val">10%</span><span class="m-key">Traffic growth per campaign cycle</span></div>
+      </div>
+      <div class="tags">
+        <span class="t">Market commentary</span><span class="t">Financial content</span>
+        <span class="t">Partnership campaigns</span><span class="t">Twitter/X · Telegram · Blog</span>
+        <span class="t">User lifecycle segmentation</span><span class="t">GA4 · Buffer · Twitter Analytics</span>
+      </div>
+    </div>
+
+    <div class="camp-card fi">
+      <p class="cc-co">VNPAY — Fintech / E-Wallet · 2024–2025</p>
+      <p class="cc-title">Event-triggered campaign strategy for 150K+ monthly active users</p>
+      <p class="cc-desc">Owned content strategy for 10+ integrated campaigns annually across online, offline, and OOH channels. Developed campaign briefs for payment promotions and seasonal activations triggered by market timing — briefed and directed internal content teams on angle, messaging, and format. Segmented content by user lifecycle stage (new, active, churned) and monitored campaign-level performance via Power BI to drive conversion.</p>
+      <div class="metrics">
+        <div><span class="m-val">30%</span><span class="m-key">YoY revenue growth</span></div>
+        <div><span class="m-val">10%</span><span class="m-key">Conversion rate improvement</span></div>
+      </div>
+      <div class="tags">
+        <span class="t">Campaign strategy</span><span class="t">User lifecycle</span>
+        <span class="t">Power BI</span><span class="t">CDP</span><span class="t">KOL/KOC</span>
+      </div>
+    </div>
+
+    <div class="camp-card fi">
+      <p class="cc-co">EFKT — Real Estate Marketing, Nordic Markets · 2025–2026</p>
+      <p class="cc-title">Multi-market content pipeline — 4+ concurrent projects, near-zero delivery delays</p>
+      <p class="cc-desc">Led content strategy and operations across 4+ concurrent in-house projects per quarter using Asana. Developed conversion-focused content strategies — landing page copy, CTA optimisation, email sequences — segmented by client lifecycle stage (new vs. existing). Integrated AI tools (Claude, ChatGPT) into production workflows for drafting, localization, and audience adaptation across Danish and Norwegian markets.</p>
+      <div class="metrics">
+        <div><span class="m-val">10–15%</span><span class="m-key">CTR/CPC improvement</span></div>
+        <div><span class="m-val">60%</span><span class="m-key">Email open rate</span></div>
+        <div><span class="m-val">~0</span><span class="m-key">Delivery delays</span></div>
+      </div>
+      <div class="tags">
+        <span class="t">Content ops</span><span class="t">Asana</span>
+        <span class="t">AI workflow</span><span class="t">Localization</span><span class="t">A/B testing</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ROLE FIT -->
+<section class="section" id="fit">
+  <p class="sec-label">Role Fit — Senior Content Operations Manager, Binance</p>
+  <h2 class="sec-heading">Six requirements from the JD. Six answers from the work.</h2>
+  <p class="sec-sub">Each item below maps a specific JD requirement to concrete evidence — not claims.</p>
+
+  <div class="match-grid">
+
+    <div class="match-item fi">
+      <p class="match-req">"Monitor financial markets and crypto trends in real time; translate market movements into timely, accurate, and engaging content"</p>
+      <p class="match-title">2 years at a live DeFi platform, monitoring and publishing daily</p>
+      <p class="match-desc">At Krystal, I followed on-chain activity and market events daily as part of core content ops — not as prep work, but as the direct input to publishing decisions. 5 years of active personal trading (perp futures, DeFi, Sui, Hyperliquid) means genuine market sensitivity, not surface familiarity.</p>
+      <span class="match-ev">↗ Evidence: Krystal blog market commentary and news category</span>
+    </div>
+
+    <div class="match-item fi">
+      <p class="match-req">"Drive content projects across stakeholders (Academy, Square, News) from brief to launch — keeping timelines tight and quality high"</p>
+      <p class="match-title">End-to-end project ownership across every role</p>
+      <p class="match-desc">EFKT (4+ concurrent projects, Asana, near-zero delays), VNPAY (10+ campaigns/year, multi-stakeholder), Krystal (5+ active partnership campaigns simultaneously) — in each role I owned the full content lifecycle and coordinated across Product, BD, design, and data teams.</p>
+      <span class="match-ev">↗ Evidence: EFKT and Krystal campaign operations above</span>
+    </div>
+
+    <div class="match-item fi">
+      <p class="match-req">"Build and maintain a content feedback loop using data: track engagement metrics, synthesize insights, and iterate fast"</p>
+      <p class="match-title">Daily tracking, weekly synthesis, fast iteration</p>
+      <p class="match-desc">At Krystal, I tracked engagement metrics daily via Twitter Analytics, GA4, and Buffer, compiled weekly and monthly reports, flagged anomalies, and fed findings back into content strategy — not as a monthly review, but as a continuous loop. At VNPAY, Power BI dashboards drove campaign-level iteration toward conversion targets.</p>
+      <span class="match-ev">↗ Evidence: 15% reach growth, 2× engagement over 2 years</span>
+    </div>
+
+    <div class="match-item fi">
+      <p class="match-req">"Apply AI tools effectively to scale content output — from ideation and drafting to localization and personalization"</p>
+      <p class="match-title">Claude Pro and ChatGPT embedded in daily workflow</p>
+      <p class="match-desc">At EFKT, I integrated AI tools into a 4-project content pipeline for drafting, audience adaptation, and localization across two markets — not as a one-off experiment, but as a core part of how the ops system ran. Use cases: angle brainstorming from market events, drafting first versions, adapting tone by lifecycle segment, summarizing performance data.</p>
+      <span class="match-ev">↗ Evidence: EFKT content pipeline above</span>
+    </div>
+
+    <div class="match-item fi">
+      <p class="match-req">"Strong user operations instincts: user segmentation, lifecycle moments, and how content drives behavior"</p>
+      <p class="match-title">Lifecycle segmentation applied in every role</p>
+      <p class="match-desc">VNG (new, paying, churned), VNPAY (new, active, churned), Krystal (new vs. existing DeFi users), EFKT (new vs. existing clients) — I have segmented content strategy by lifecycle stage in every role. At VNPAY, this directly connected to a 10% conversion rate improvement via CDP targeting.</p>
+      <span class="match-ev">↗ Evidence: VNPAY campaign results above</span>
+    </div>
+
+    <div class="match-item fi">
+      <p class="match-req">"Genuine market sensitivity — you follow macro trends, understand trading behavior, and can speak the language of investors"</p>
+      <p class="match-title">Active crypto trader for 5 years across multiple ecosystems</p>
+      <p class="match-desc">Perpetual futures trading, DeFi liquidity management, Sui ecosystem participation, Hyperliquid. I don't write about crypto from the outside — I participate in the same markets as the users I'm writing for. That shows in how content is framed: not what happened, but what it means for someone holding a position.</p>
+      <span class="match-ev">↗ Evidence: Krystal strategy guide and market news writing</span>
+    </div>
+
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section class="section" id="experience">
+  <p class="sec-label">Experience</p>
+  <h2 class="sec-heading">7+ years across crypto, fintech, and Web3.</h2>
+
+  <div>
+    <div class="exp-item fi">
+      <span class="exp-period">Apr 2025 – Mar 2026</span>
+      <div>
+        <p class="exp-co">EFKT — Nordic Real Estate Marketing</p>
+        <p class="exp-role">Senior Marketing Specialist</p>
+        <p class="exp-desc">Led content strategy and campaign operations across 4+ concurrent in-house projects per quarter using Asana, maintaining near-zero delivery delays. Developed conversion-focused content for Danish and Norwegian markets — landing page copy, CTAs, email sequences — segmented by client lifecycle stage. Integrated AI tools into production workflows and tracked performance via GA4.</p>
+      </div>
+    </div>
+    <div class="exp-item fi">
+      <span class="exp-period">Apr 2024 – Mar 2025</span>
+      <div>
+        <p class="exp-co">VNPAY — Fintech / E-Wallet</p>
+        <p class="exp-role">Account Planner</p>
+        <p class="exp-desc">Owned campaign strategy for 10+ integrated campaigns annually for 150K+ monthly active users. Developed event-triggered content strategies, segmented messaging by user lifecycle stage, and used CDP targeting and Power BI to monitor and iterate toward conversion — contributing to 30% YoY revenue growth.</p>
+      </div>
+    </div>
+    <div class="exp-item fi">
+      <span class="exp-period">Feb 2022 – Mar 2024</span>
+      <div>
+        <p class="exp-co">Krystal / Kyber Network — Multi-chain DeFi Platform</p>
+        <p class="exp-role">Senior Marketing Specialist</p>
+        <p class="exp-desc">Owned financial and market content strategy across Twitter/X (60K followers), Telegram, and company blog. Produced real-time market commentary, DeFi educational content, and partnership campaigns. Led 5 global moderators across 5 countries. Coordinated cross-functionally with Product, BD, and Data teams in Singapore, France, and SEA.</p>
+      </div>
+    </div>
+    <div class="exp-item fi">
+      <span class="exp-period">Nov 2018 – Jan 2022</span>
+      <div>
+        <p class="exp-co">VNG Corporation — Mobile Gaming / Fintech</p>
+        <p class="exp-role">Marketing Specialist</p>
+        <p class="exp-desc">Owned editorial calendar and content strategy for a 1.2M-follower Facebook page across 5 international markets. Coordinated localization workflows for Vietnam, Thailand, Philippines, India, and LATAM. Ran paid acquisition campaigns generating 120K+ new users/month.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="section" id="contact">
+  <p class="sec-label">Contact</p>
+  <div class="contact-box fi">
+    <div>
+      <h3>Let's talk content ops.</h3>
+      <p>Open to senior content operations roles in crypto and financial platforms. Based in Hanoi, Vietnam. Available for fully remote work.</p>
+    </div>
+    <div class="c-links">
+      <a class="c-link" href="mailto:huecao0497@gmail.com">
+        <span class="c-icon">✉</span> huecao0497@gmail.com
+      </a>
+      <a class="c-link" href="tel:+84836991997">
+        <span class="c-icon">✆</span> +84 836 991 997
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>Jessie Cao — Senior Content Operations Manager</p>
+  <p>Hanoi, Vietnam · Open to Remote</p>
+</footer>
+
+<script>
+  const obs = new IntersectionObserver(
+    entries => entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('show'); }),
+    { threshold: 0.07 }
+  );
+  document.querySelectorAll('.fi').forEach(el => obs.observe(el));
+</script>
+</body>
+</html>
